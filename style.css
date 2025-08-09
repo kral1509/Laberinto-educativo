@@ -47,3 +47,83 @@ body {
   justify-content: space-between;
   align-items: flex-start;
 }
+
+.menu-izquierda {
+  flex: 1;
+}
+
+.menu-derecha {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#imagen-personaje {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 2px solid #00aaff;
+  box-shadow: 0 0 15px #00aaff;
+}
+
+select {
+  padding: 12px;
+  font-size: 1em;
+  border: 2px solid #00aaff;
+  background-color: #1a0033;
+  color: white;
+  border-radius: 10px;
+}
+
+.menu-izquierda button {
+  display: block;
+  width: 80%;
+  margin: 15px auto;
+  padding: 20px;
+  font-size: 1.2em;
+  background-color: #00aaff;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00aaff;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.menu-izquierda button:hover {
+  background-color: #0088cc;
+  transform: scale(1.05);
+}
+
+.niveles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+/* Inputs */
+input {
+  padding: 12px;
+  margin: 10px;
+  width: 250px;
+  border-radius: 10px;
+  border: 1px solid #00aaff;
+  background-color: #1a0033;
+  color: white;
+  font-size: 1em;
+}
+
+input::placeholder {
+  color: #ccc;
+}
+
+.niveles {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 24px 0;
+}
