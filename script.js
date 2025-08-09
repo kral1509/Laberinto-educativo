@@ -61,6 +61,8 @@ document.addEventListener("keydown", (e) => {  // Tecla ESC para regresar al men
 
 });
 
+
+
 // Precarga inicial del personaje por defecto
 preCargarSprites(personajeSeleccionado);
 
@@ -76,13 +78,13 @@ function preCargarSprites(nombreArchivo) {
     imagenesCargadas[baseNombre][dir] = [];
     for (let i = 1; i <= max; i++) {
       const img = new Image();
-      img.src = Recursos/${baseNombre}${i}${dir}.png;
+      img.src = `Recursos/${baseNombre}${i}${dir}.png`;
       imagenesCargadas[baseNombre][dir].push(img);
     }
   });
 
   const idle = new Image();
-  idle.src = Recursos/${baseNombre}Idle.png;
+  idle.src = `Recursos/${baseNombre}Idle.png`;
   imagenesCargadas[baseNombre]["idle"] = idle;
 }
 
@@ -138,3 +140,99 @@ function iniciarNivel(nivel) {
         mapa[y][x] = 0;
       }
     }
+  }
+
+  // Restaurar contador a su estado inicial
+// Restaurar contador a su estado normal
+const contador = document.getElementById("contador-tiempo");
+if (contador) {
+  contador.textContent = `Tiempo restante: 30s`;
+  contador.style.color = "#ffffff"; // blanco
+  contador.style.fontSize = "2em";
+}
+
+
+  document.getElementById("pantalla-niveles").classList.add("oculto");
+  document.getElementById("pantalla-juego").classList.remove("oculto");
+
+  iniciarLoop();
+  iniciarContador();
+}
+
+function iniciarLoop() {
+  const canvas = document.getElementById("canvas-juego");
+  const ctx = canvas.getContext("2d");
+  canvas.width = tileSize * 32;
+  canvas.height = tileSize * 18;
+
+  if (loopID) clearInterval(loopID);
+
+  loopID = setInterval(() => {
+    moverPersonaje();
+    actualizarPosicion();
+    dibujarMapa(ctx);
+  }, 40);
+}
+
+function moverPersonaje() {
+  if (tiempoRestante <= 0) return; // ❌ Bloquear movimiento si se acabó el tiempo
+  if (moviendo) return;
+
+  const col = Math.floor(posX / tileSize);
+  const fil = Math.floor(posY / tileSize);
+
+  if (teclasPresionadas["ArrowUp"] && puedeMover(col, fil - 1)) {
+    direccion = "up";
+    destinoY -= tileSize;
+    moviendo = true;
+  } else if (teclasPresionadas["ArrowDown"] && puedeMover(col, fil + 1)) {
+    direccion = "down";
+    destinoY += tileSize;
+    moviendo = true;
+  } else if (teclasPresionadas["ArrowLeft"] && puedeMover(col - 1, fil)) {
+    direccion = "left";
+    destinoX -= tileSize;
+    moviendo = true;
+  } else if (teclasPresionadas["ArrowRight"] && puedeMover(col + 1, fil)) {
+    direccion = "right";
+    destinoX += tileSize;
+    moviendo = true;
+  }
+}
+
+function puedeMover(x, y) {
+  if (y < 0 || y >= mapa.length || x < 0 || x >= mapa[0].length) return false;
+  return mapa[y][x] !== 1;
+}
+
+function actualizarPosicion() {
+  if (!moviendo) return;
+
+  const dx = destinoX - posX;
+  const dy = destinoY - posY;
+
+  const antesX = posX;
+  const antesY = posY;
+
+  if (Math.abs(dx) > velocidad) posX += velocidad * Math.sign(dx);
+  else posX = destinoX;
+
+  if (Math.abs(dy) > velocidad) posY += velocidad * Math.sign(dy);
+  else posY = destinoY;
+
+  distanciaDesdeInicio += Math.abs(posX - antesX) + Math.abs(posY - antesY);
+
+  if (posX === destinoX && posY === destinoY) {
+    moviendo = false;
+    distanciaDesdeInicio = 0;
+  }
+  const col = Math.floor(posX / tileSize);
+const fil = Math.floor(posY / tileSize);
+
+if (mapa[fil] && mapa[fil][col] === 2) {
+  terminarJuego("🛑 GAME OVER 🛑", "#ff4444");
+} else if (mapa[fil] && mapa[fil][col] === 3) {
+  terminarJuego("🎉 ¡Felicidades! Has completado el nivel 🎉", "#44ff44");
+}
+
+}
