@@ -78,13 +78,13 @@ function preCargarSprites(nombreArchivo) {
     imagenesCargadas[baseNombre][dir] = [];
     for (let i = 1; i <= max; i++) {
       const img = new Image();
-      img.src = `Recursos/${baseNombre}${i}${dir}.png`;
+      img.src = Recursos/${baseNombre}${i}${dir}.png;
       imagenesCargadas[baseNombre][dir].push(img);
     }
   });
 
   const idle = new Image();
-  idle.src = `Recursos/${baseNombre}Idle.png`;
+  idle.src = Recursos/${baseNombre}Idle.png;
   imagenesCargadas[baseNombre]["idle"] = idle;
 }
 
@@ -142,11 +142,10 @@ function iniciarNivel(nivel) {
     }
   }
 
-  // Restaurar contador a su estado inicial
 // Restaurar contador a su estado normal
 const contador = document.getElementById("contador-tiempo");
 if (contador) {
-  contador.textContent = `Tiempo restante: 30s`;
+  contador.textContent = Tiempo restante: 30s;
   contador.style.color = "#ffffff"; // blanco
   contador.style.fontSize = "2em";
 }
@@ -175,7 +174,7 @@ function iniciarLoop() {
 }
 
 function moverPersonaje() {
-  if (tiempoRestante <= 0) return; // ❌ Bloquear movimiento si se acabó el tiempo
+  if (tiempoRestante <= 0) return; // Bloquear movimiento si se acabó el tiempo
   if (moviendo) return;
 
   const col = Math.floor(posX / tileSize);
@@ -235,4 +234,126 @@ if (mapa[fil] && mapa[fil][col] === 2) {
   terminarJuego("🎉 ¡Felicidades! Has completado el nivel 🎉", "#44ff44");
 }
 
+}
+
+function dibujarMapa(ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+for (let y = 0; y < mapa.length; y++) {
+  for (let x = 0; x < mapa[y].length; x++) {
+    const valor = mapa[y][x];
+    let usarImagen = false;
+
+    if (valor === 0 || valor === 4) {
+      // Camino libre o centro
+      if (texturasMapa.camino.complete) {
+        ctx.drawImage(texturasMapa.camino, x * tileSize, y * tileSize, tileSize, tileSize);
+        usarImagen = true;
+      }
+    } else if (valor === 1) {
+      // Muro / colisión
+      if (texturasMapa.muro.complete) {
+        ctx.drawImage(texturasMapa.muro, x * tileSize, y * tileSize, tileSize, tileSize);
+        usarImagen = true;
+      }
+    }
+
+    if (!usarImagen) {
+      let color = "#222";
+
+      if (valor === 1) color = "#333";
+      else if (valor === 2) color = "#ff4444"; // respuesta incorrecta
+      else if (valor === 3) color = "#44ff44"; // respuesta correcta
+      else if (valor === 0 || valor === 4) color = "#111"; // camino libre
+
+      ctx.fillStyle = color;
+      ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+    }
+  }
+}
+
+
+  const ahora = Date.now();
+  const baseNombre = personajeSeleccionado.split(".")[0].toLowerCase();
+  let img;
+
+  const hayMovimiento = teclasPresionadas["ArrowUp"] || teclasPresionadas["ArrowDown"] ||
+                        teclasPresionadas["ArrowLeft"] || teclasPresionadas["ArrowRight"];
+
+  if (hayMovimiento && distanciaDesdeInicio > 0) {
+    if (ahora - ultimoCambioSprite >= tiempoEntreSprites) {
+      const max = spritesPorDireccion[personajeSeleccionado];
+      frame = frame < max ? frame + 1 : 1;
+      ultimoCambioSprite = ahora;
+    }
+    img = imagenesCargadas[baseNombre]?.[direccion]?.[frame - 1];
+  } else {
+    frame = 1;
+    img = imagenesCargadas[baseNombre]?.["idle"];
+  }
+
+  if (img && img.complete) {
+    ctx.drawImage(img, posX - tileSize / 2, posY - tileSize / 2, tileSize, tileSize);
+  }
+}
+
+function iniciarContador() {
+  tiempoRestante = 30;
+  actualizarContador();
+
+  if (intervaloTiempo) clearInterval(intervaloTiempo);
+
+  intervaloTiempo = setInterval(() => {
+    tiempoRestante--;
+    actualizarContador();
+
+    if (tiempoRestante <= 0) {
+      clearInterval(intervaloTiempo);
+      mostrarGameOver();
+    }
+  }, 1000);
+}
+
+function actualizarContador() {
+  const elemento = document.getElementById("contador-tiempo");
+  if (elemento) {
+    elemento.textContent = Tiempo restante: ${tiempoRestante}s;
+  }
+}
+
+function mostrarGameOver() {
+  const elemento = document.getElementById("contador-tiempo");
+  if (elemento) {
+    elemento.textContent = "🕹️ GAME OVER 🕹️";
+    elemento.style.color = "#ff4444";
+    elemento.style.fontSize = "2em";
+  }
+}
+
+function terminarJuego(mensaje, color) {
+  clearInterval(intervaloTiempo);
+  clearInterval(loopID);
+  const elemento = document.getElementById("contador-tiempo");
+  if (elemento) {
+    elemento.textContent = mensaje;
+    elemento.style.color = color;
+    elemento.style.fontSize = "1.8em";
+  }
+}
+
+// Inicializar botones de nivel: setear imagen de fondo y evento click
+function inicializarBotonesNiveles() {
+  const botones = document.querySelectorAll('.nivel-btn');
+  botones.forEach(btn => {
+    const img = btn.getAttribute('data-img'); // ejemplo: "nivel1.png"
+    if (img) {
+      btn.style.backgroundImage = url("Recursos/${img}");
+    }
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-nivel'), 10);
+      if (!isNaN(idx)) {
+        iniciarNivel(idx); // usa tu función existente para arrancar el nivel
+      }
+    });
+  });
 }
