@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laberinto Educativo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Pantalla de Inicio (Login / Registro) -->
+  <section id="pantalla-inicio">
+    <div class="contenedor">
+      <h1 class="titulo">Bienvenido</h1>
+      
+      <div class="login-form">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" placeholder="Usuario" />
+        <input type="password" placeholder="Clave" />
+        <button onclick="irAlMenu()">Entrar</button>
+      </div>
+
+      <div class="registro-form">
+        <h2>Registrarse</h2>
+        <input type="text" placeholder="Nombre" />
+        <input type="password" placeholder="Clave" />
+        <input type="number" placeholder="Edad" />
+        <input type="email" placeholder="Correo" />
+        <input type="text" placeholder="Curso" />
+        <select>
+          <option value="">Género</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <button onclick="irAlMenu()">Registrarse</button>
+      </div>
+    </div>
+  </section>
