@@ -33,3 +33,30 @@ let loopID = null;
 let tiempoRestante = 30;
 let intervaloTiempo = null;
 let teclasPresionadas = {};
+
+document.addEventListener("keydown", (e) => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault(); // <- Esto evita el desplazamiento de la página
+    teclasPresionadas[e.key] = true;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault(); // <- También en keyup
+    teclasPresionadas[e.key] = false;
+  }
+});
+
+document.addEventListener("keydown", (e) => {  // Tecla ESC para regresar al menú
+  teclasPresionadas[e.key] = true;
+  if (e.key === "Escape") {
+  const juegoVisible = !document.getElementById("pantalla-juego").classList.contains("oculto");
+  const nivelesVisible = !document.getElementById("pantalla-niveles").classList.contains("oculto");
+
+  if (juegoVisible || nivelesVisible) {
+    volverAlMenu();
+  }
+}
+
+});
