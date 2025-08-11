@@ -21,7 +21,7 @@ body {
   box-shadow: 0 0 30px #00aaff;
 }
 
-/* contenedor específico del juego */
+/* CORRECCIÓN: contenedor específico del juego */
 #pantalla-juego .contenedor {
   max-width: 1700px;
   padding: 30px;
@@ -130,7 +130,7 @@ input::placeholder {
 
 .niveles {
   display: flex;
-  gap: 100px;
+  gap: 100px; /* Más separación horizontal entre botones */
   justify-content: center;
   align-items: center;
   margin: 16px 0 28px 0;
@@ -138,7 +138,7 @@ input::placeholder {
 
 /* Botón de nivel cuadrado */
 .nivel-btn {
-  width: 100px;            
+  width: 100px;             /* Más pequeño que antes */
   height: 100px;
   background-size: cover;
   background-position: center;
@@ -179,16 +179,16 @@ input::placeholder {
   left: 100%;
 }
 
-
+/* Texto títulos y subtítulos más grandes */
 .titulo-dificultad {
-  font-size: 2.4em;
+  font-size: 2.4em; /* Antes ~2em */
   color: #00aaff;
   margin-bottom: 15px;
   text-shadow: 0 0 10px #00aaff;
 }
 
 .subtitulo-dificultad {
-  font-size: 1.6em; 
+  font-size: 1.6em; /* Más grande para "Fácil", "Medio", "Difícil" */
   margin: 10px 0;
   color: #fff;
   text-shadow: 0 0 6px #00aaff;

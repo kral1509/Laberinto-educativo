@@ -43,7 +43,7 @@ document.addEventListener("keydown", (e) => {
 
 document.addEventListener("keyup", (e) => {
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-    e.preventDefault(); // <- También en keyup
+    e.preventDefault();
     teclasPresionadas[e.key] = false;
   }
 });
@@ -78,13 +78,13 @@ function preCargarSprites(nombreArchivo) {
     imagenesCargadas[baseNombre][dir] = [];
     for (let i = 1; i <= max; i++) {
       const img = new Image();
-      img.src = 'Recursos/${baseNombre}${i}${dir}.png';
+      img.src = `Recursos/${baseNombre}${i}${dir}.png`;
       imagenesCargadas[baseNombre][dir].push(img);
     }
   });
 
   const idle = new Image();
-  idle.src = 'Recursos/${baseNombre}Idle.png';
+  idle.src = `Recursos/${baseNombre}Idle.png`;
   imagenesCargadas[baseNombre]["idle"] = idle;
 }
 
@@ -142,11 +142,10 @@ function iniciarNivel(nivel) {
     }
   }
 
-  // Restaurar contador a su estado inicial
 // Restaurar contador a su estado normal
 const contador = document.getElementById("contador-tiempo");
 if (contador) {
-  contador.textContent = 'Tiempo restante: 30s';
+  contador.textContent = `Tiempo restante: 30s`;
   contador.style.color = "#ffffff"; // blanco
   contador.style.fontSize = "2em";
 }
@@ -175,7 +174,7 @@ function iniciarLoop() {
 }
 
 function moverPersonaje() {
-  if (tiempoRestante <= 0) return; // ❌ Bloquear movimiento si se acabó el tiempo
+  if (tiempoRestante <= 0) return; // Bloquear movimiento si se acabó el tiempo
   if (moviendo) return;
 
   const col = Math.floor(posX / tileSize);
@@ -319,7 +318,7 @@ function iniciarContador() {
 function actualizarContador() {
   const elemento = document.getElementById("contador-tiempo");
   if (elemento) {
-    elemento.textContent = 'Tiempo restante: ${tiempoRestante}s';
+    elemento.textContent = `Tiempo restante: ${tiempoRestante}s`;
   }
 }
 
@@ -349,7 +348,7 @@ function inicializarBotonesNiveles() {
   botones.forEach(btn => {
     const img = btn.getAttribute('data-img'); // ejemplo: "nivel1.png"
     if (img) {
-      btn.style.backgroundImage = url("Recursos/${img}");
+      btn.style.backgroundImage = `url("Recursos/${img}")`;
     }
     btn.addEventListener('click', () => {
       const idx = parseInt(btn.getAttribute('data-nivel'), 10);
@@ -360,10 +359,9 @@ function inicializarBotonesNiveles() {
   });
 }
 
-// Llama a esto cuando cargue la página (al final del script)
 inicializarBotonesNiveles();
 
-// MATRICES DE LOS NIVELES (vacías para que las rellenes tú)
+// MATRICES DE LOS NIVELES
 const mapasPorNivel = [
   // Dificultad facil
   [
