@@ -4,159 +4,363 @@ body {
   background: url('Recursos/Fondo.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
 }
 
 .oculto {
-  display: none;
+  display: none !important;
 }
 
 .contenedor {
-  max-width: 1300px;
-  margin: 50px auto;
-  text-align: center;
-  background-color: rgba(25, 0, 45, 0.85);
-  padding: 30px;
-  border-radius: 20px;
-  border: 2px solid #00aaff;
-  box-shadow: 0 0 30px #00aaff;
-}
-
-/* CORRECCIÓN: contenedor específico del juego */
-#pantalla-juego .contenedor {
-  max-width: 1700px;
-  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+  /* Puedes ajustar este valor */
+  margin: 0 auto;
+  padding: 24px;
   box-sizing: border-box;
-  margin: 20px auto;
-}
-
-.canvas-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.titulo {
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  color: #00aaff;
-  text-shadow: 0 0 10px #00aaff;
+  background: rgba(42, 0, 58, 0.7);
+  border-radius: 18px;
 }
 
 .contenedor-flex {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  justify-content: center;
   align-items: flex-start;
+  gap: 48px;
+}
+
+#menu-principal .contenedor {
+  max-width: 1500px;  
+  min-height: 675px; 
+  padding: 56px 56px 48px 56px; /* Más espacio interno */
+}
+
+#menu-principal .contenedor-flex {
+  height: 100%;
+  align-items: center;
+}
+
+.formularios-flex {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.login-form,
+.registro-form {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto 24px auto;
+  background: rgba(42, 0, 58, 0.85);
+  padding: 32px 24px 24px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #0004;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form h2,
+.registro-form h2 {
+  margin-bottom: 12px;
+  font-size: 1.3em;
+  color: #00aaff;
+  text-align: center;
+}
+
+.login-form input,
+.registro-form input,
+.registro-form select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1em;
+  margin-bottom: 8px;
+  background: #fff;
+  color: #2a003a;
+}
+
+.btn-grande {
+  padding: 14px 0;
+  font-size: 1.2em;
+  border-radius: 10px;
+  background: #00aaff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px #0002;
+}
+
+.btn-grande:hover {
+  background: #0077cc;
+  transform: scale(1.05);
+}
+
+.alternar-form {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.98em;
+  color: #ccc;
+}
+
+.alternar-link {
+  color: #00aaff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 4px;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.alternar-link:hover {
+  color: #0077cc;
+}
+
+.titulo {
+  font-family: 'Audiowide', 'Press Start 2P', 'Orbitron', Arial, sans-serif;
+  font-size: 3em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  /* Neon border effect */
+  text-shadow:
+    0 0 8px #00aaff,
+    0 0 16px #00aaff,
+    0 0 24px #8f00ff,
+    0 0 32px #8f00ff,
+    0 0 40px #fff,
+    0 0 2px #fff;
+  /* Optional: glowing animation */
+  animation: neonGlow 1.5s infinite alternate;
+}
+
+@keyframes neonGlow {
+  from {
+    text-shadow:
+      0 0 8px #00aaff,
+      0 0 16px #00aaff,
+      0 0 24px #8f00ff,
+      0 0 32px #8f00ff,
+      0 0 40px #fff,
+      0 0 2px #fff;
+  }
+  to {
+    text-shadow:
+      0 0 16px #00aaff,
+      0 0 32px #00aaff,
+      0 0 48px #8f00ff,
+      0 0 64px #8f00ff,
+      0 0 80px #fff,
+      0 0 4px #fff;
+  }
+}
+
+.menu-izquierda .titulo {
+  align-self: center;
+  width: 100%;
+  text-align: center; /* <-- Agrega esto */
+  margin-left: 0;     /* <-- Asegúrate que no tenga margen izquierdo */
 }
 
 .menu-izquierda {
-  flex: 1;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; /* <-- Cambia de flex-end a center */
+  gap: 24px;
 }
 
 .menu-derecha {
-  flex: 1;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.btn-imagen {
+  background: rgba(255,255,255,0.95);
+  border: none;
+  padding: 0;
+  margin-bottom: 18px;
+  cursor: pointer;
+  display: block;
+  width: 500px;
+  height: 110px;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: none;
+}
+
+.btn-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* Cambia de contain a cover */
+  border-radius: 30px;    /* Igual que el botón */
+  background: transparent;/* Quita el fondo blanco */
+  display: block;
+}
+
+/* Efecto brillo */
+.btn-imagen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
+  transition: left 0.6s ease;
+  border-radius: 30px;
+  pointer-events: none;
+}
+
+.btn-imagen:hover::after {
+  left: 100%;
+}
+
+/* Borde iluminado suave */
+.btn-imagen.iniciar {
+  box-shadow: 0 0 24px 4px rgba(0, 234, 255, 0.13), 0 0 0 4px rgba(0, 234, 255, 0.09);
+  animation: bordePulseCeleste 1.7s infinite alternate;
+}
+
+.btn-imagen.niveles {
+  box-shadow: 0 0 24px 4px rgba(68, 255, 136, 0.13), 0 0 0 4px rgba(68, 255, 136, 0.09);
+  animation: bordePulseVerde 1.7s infinite alternate;
+}
+
+.btn-imagen.salir {
+  box-shadow: 0 0 24px 4px rgba(255, 68, 68, 0.13), 0 0 0 4px rgba(255, 68, 68, 0.09);
+  animation: bordePulseRojo 1.7s infinite alternate;
+}
+
+/* Animaciones de pulsación suave */
+@keyframes bordePulseCeleste {
+  0%   { box-shadow: 0 0 24px 4px rgba(0,234,255,0.25), 0 0 0 4px rgba(0,234,255,0.18);}
+  80%  { box-shadow: 0 0 24px 4px rgba(0,234,255,0.25), 0 0 0 4px rgba(0,234,255,0.18);}
+  90%  { box-shadow: 0 0 40px 8px rgba(0,234,255,0.32), 0 0 0 8px rgba(0,234,255,0.22);}
+  100% { box-shadow: 0 0 24px 4px rgba(0,234,255,0.25), 0 0 0 4px rgba(0,234,255,0.18);}
+}
+@keyframes bordePulseVerde {
+  0%   { box-shadow: 0 0 24px 4px rgba(68,255,136,0.25), 0 0 0 4px rgba(68,255,136,0.18);}
+  80%  { box-shadow: 0 0 24px 4px rgba(68,255,136,0.25), 0 0 0 4px rgba(68,255,136,0.18);}
+  90%  { box-shadow: 0 0 40px 8px rgba(68,255,136,0.32), 0 0 0 8px rgba(68,255,136,0.22);}
+  100% { box-shadow: 0 0 24px 4px rgba(68,255,136,0.25), 0 0 0 4px rgba(68,255,136,0.18);}
+}
+@keyframes bordePulseRojo {
+  0%   { box-shadow: 0 0 24px 4px rgba(255,68,68,0.25), 0 0 0 4px rgba(255,68,68,0.18);}
+  80%  { box-shadow: 0 0 24px 4px rgba(255,68,68,0.25), 0 0 0 4px rgba(255,68,68,0.18);}
+  90%  { box-shadow: 0 0 40px 8px rgba(255,68,68,0.32), 0 0 0 8px rgba(255,68,68,0.22);}
+  100% { box-shadow: 0 0 24px 4px rgba(255,68,68,0.25), 0 0 0 4px rgba(255,68,68,0.18);}
+}
+
+.personaje-img {
+  width: 350px;      /* Antes 90px */
+  height: 350px;     /* Antes 180px */
+  object-fit: contain;
+  border-radius: 24px;
+  background: transparent;
+  margin-bottom: 18px; /* Más espacio debajo */
+  display: block;
+}
+
+.personaje-select-imagenes {
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+  margin-top: 0px;
+}
+
+.personaje-opcion {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0003;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s, transform 0.2s;
+}
+
+.personaje-opcion:hover {
+  border: 2px solid #00aaff;
+  transform: scale(1.12);
+}
+
+.login-form,
+.registro-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 24px auto;
+  background: rgba(42, 0, 58, 0.8);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+#pantalla-juego .contenedor {
+  width: 95vw;
+  max-width: 1800px;
+  min-height: 90vh;
+  margin: 2vh auto;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(42, 0, 58, 0.7);
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#imagen-personaje {
-  width: 150px;
+#canvas-juego {
+  width: 100%;
+  max-width: 100%;
   height: auto;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border: 2px solid #00aaff;
-  box-shadow: 0 0 15px #00aaff;
-}
-
-select {
-  padding: 12px;
-  font-size: 1em;
-  border: 2px solid #00aaff;
-  background-color: #1a0033;
-  color: white;
-  border-radius: 10px;
-}
-
-.menu-izquierda button {
   display: block;
-  width: 80%;
-  margin: 15px auto;
-  padding: 20px;
-  font-size: 1.2em;
-  background-color: #00aaff;
-  border: none;
-  border-radius: 15px;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 10px #00aaff;
-  transition: background 0.3s, transform 0.2s;
-}
-
-.menu-izquierda button:hover {
-  background-color: #0088cc;
-  transform: scale(1.05);
-}
-
-.niveles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 20px 0;
-}
-
-/* Inputs */
-input {
-  padding: 12px;
-  margin: 10px;
-  width: 250px;
-  border-radius: 10px;
-  border: 1px solid #00aaff;
-  background-color: #1a0033;
-  color: white;
-  font-size: 1em;
-}
-
-input::placeholder {
-  color: #ccc;
+  margin: 0 auto;
+  background: #2a003a;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px #000a;
 }
 
 .niveles {
   display: flex;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: 100px;
   justify-content: center;
-  align-items: center;
-  margin: 12px 0 24px 0;
+  margin-bottom: 24px;
 }
 
-.niveles {
-  display: flex;
-  gap: 100px; /* Más separación horizontal entre botones */
-  justify-content: center;
-  align-items: center;
-  margin: 16px 0 28px 0;
-}
-
-/* Botón de nivel cuadrado */
 .nivel-btn {
-  width: 100px;             /* Más pequeño que antes */
-  height: 100px;
+  width: 90px;
+  height: 90px;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   border: none;
-  box-shadow: 0 6px 18px rgba(0,170,255,0.18);
   cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease;
-  padding: 0;
-  outline: none;
-  position: relative;
-  overflow: hidden;
+  transition: transform 0.2s;
+  position: relative;      /* <-- Agrega esto */
+  overflow: hidden;        /* <-- Agrega esto */
+}
+.nivel-btn:hover {
+  transform: scale(1.08);
 }
 
-.nivel-btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 12px 30px rgba(0,170,255,0.28);
-}
 
 /* Efecto brillo */
 .nivel-btn::after {
@@ -166,13 +370,13 @@ input::placeholder {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transition: left 0.6s ease;
+  pointer-events: none;    /* <-- Opcional, evita clics */
+  z-index: 2;              /* <-- Opcional, asegura que esté arriba */
 }
 
 .nivel-btn:hover::after {
@@ -181,15 +385,122 @@ input::placeholder {
 
 /* Texto títulos y subtítulos más grandes */
 .titulo-dificultad {
-  font-size: 2.4em; /* Antes ~2em */
-  color: #00aaff;
-  margin-bottom: 15px;
-  text-shadow: 0 0 10px #00aaff;
+  font-family: 'Audiowide', 'Press Start 2P', 'Orbitron', Arial, sans-serif;
+  font-size: 3em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-shadow:
+    0 0 8px #00aaff,
+    0 0 16px #00aaff,
+    0 0 24px #8f00ff,
+    0 0 32px #8f00ff,
+    0 0 40px #fff,
+    0 0 2px #fff;
+  animation: neonGlow 1.5s infinite alternate;
+  width: 100%;
+  display: block;
 }
 
 .subtitulo-dificultad {
-  font-size: 1.6em; /* Más grande para "Fácil", "Medio", "Difícil" */
-  margin: 10px 0;
+  font-size: 1.6em;
+  margin: 18px 0 22px 0; /* Arriba, derecha, abajo, izquierda */
   color: #fff;
   text-shadow: 0 0 6px #00aaff;
+}
+
+.juego-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  gap: 32px;
+  justify-content: flex-start;
+}
+
+.contador-box {
+  min-width: 220px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#contador-tiempo {
+  font-size: 2.2em;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 12px #00aaff, 0 0 24px #8f00ff;
+}
+
+#contador-valor {
+  min-width: 2.5em;
+  font-size: 1.8em;      /* Más grande para mensajes finales */
+  margin-top: 40px;      /* Más espacio arriba */
+  margin-bottom: 30px;   /* Más espacio abajo */
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: #fff;
+  display: block;
+  /* Centrado horizontal */
+  width: 100%;
+  /* Puedes agregar sombra si quieres resaltar */
+  text-shadow: 0 0 12px #00aaff, 0 0 24px #8f00ff;
+}
+
+.mapa-box {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+#botones-fin-juego {
+  position: absolute;
+  left: 80px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  z-index: 10;
+}
+
+.botones-fila-superior {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.boton-img {
+  width: 110px;
+  height: 110px;
+  cursor: pointer;
+  border-radius: 22px;
+  background: none;
+  transition: transform 0.15s;
+  display: block;
+}
+
+.boton-img:hover {
+  transform: scale(1.12);
+}
+
+.oculto {
+  display: none !important;
 }

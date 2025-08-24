@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Laberinto Educativo</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Audiowide&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
 
-  <!-- Pantalla de Inicio (Login / Registro) -->
   <section id="pantalla-inicio">
     <div class="contenedor">
       <h1 class="titulo">Bienvenido</h1>
-      
-      <div class="login-form">
+      <div id="login-form" class="login-form">
         <h2>Iniciar Sesión</h2>
         <input type="text" placeholder="Usuario" />
         <input type="password" placeholder="Clave" />
-        <button onclick="irAlMenu()">Entrar</button>
+        <button class="btn-grande" onclick="irAlMenu()">Entrar</button>
+        <div class="alternar-form">
+          ¿No tienes cuenta? <span onclick="mostrarRegistro()" class="alternar-link">Regístrate</span>
+        </div>
       </div>
-
-      <div class="registro-form">
+      <div id="registro-form" class="registro-form oculto">
         <h2>Registrarse</h2>
         <input type="text" placeholder="Nombre" />
         <input type="password" placeholder="Clave" />
@@ -33,27 +38,41 @@
           <option value="F">Femenino</option>
           <option value="Otro">Otro</option>
         </select>
-        <button onclick="irAlMenu()">Registrarse</button>
+        <button class="btn-grande" onclick="irAlMenu()">Registrarse</button>
+        <div class="alternar-form">
+          ¿Ya tienes cuenta? <span onclick="mostrarLogin()" class="alternar-link">Inicia sesión</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Menú principal -->
   <section id="menu-principal" class="oculto">
-    <div class="contenedor contenedor-flex">
-      <div class="menu-izquierda">
-        <h1 class="titulo">Laberinto Educativo</h1>
-        <button onclick="mostrarJuego()">Iniciar</button>
-        <button onclick="mostrarNiveles()">Niveles</button>
-        <button onclick="salir()">Salir</button>
-      </div>
-      <div class="menu-derecha">
-        <img id="imagen-personaje" src="Recursos/pikachu.png" alt="Personaje" />
-        <select id="seleccion-personaje">
-          <option value="pikachu.png">Pikachu</option>
-          <option value="luigi.png">Luigi</option>
-          <option value="cuphead.png">Cuphead</option>
-        </select>
+    <div class="contenedor">
+      <h1 class="titulo">La Ruta del Acento</h1>
+      <div class="contenedor-flex">
+        <div class="menu-izquierda">
+          <!-- Botones aquí -->
+          <button class="btn-imagen iniciar" onclick="mostrarJuego()">
+            <img src="Recursos/boton1.png" alt="Iniciar" />
+          </button>
+          <button class="btn-imagen niveles" onclick="mostrarNiveles()">
+            <img src="Recursos/boton2.png" alt="Niveles" />
+          </button>
+          <button class="btn-imagen salir" onclick="salir()">
+            <img src="Recursos/boton3.png" alt="Salir" />
+          </button>
+        </div>
+        <div class="menu-derecha">
+          <img id="imagen-personaje" src="Recursos/pikachu.png" alt="Personaje" class="personaje-img" />
+          <div class="personaje-select-imagenes">
+            <img src="Recursos/pikachu-simbolo.png" alt="Pikachu" class="personaje-opcion"
+              onclick="cambiarPersonaje('pikachu.png')" />
+            <img src="Recursos/luigi-simbolo.png" alt="Luigi" class="personaje-opcion"
+              onclick="cambiarPersonaje('luigi.png')" />
+            <img src="Recursos/cuphead-simbolo.png" alt="Cuphead" class="personaje-opcion"
+              onclick="cambiarPersonaje('cuphead.png')" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -61,28 +80,37 @@
   <!-- Pantalla de niveles -->
   <section id="pantalla-niveles" class="oculto">
     <div class="contenedor">
-<h2 class="titulo-dificultad">Niveles</h2>
+      <h2 class="titulo-dificultad">Niveles</h2>
 
-<h3 class="subtitulo-dificultad">Fácil</h3>
-<div class="niveles">
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')" onclick="iniciarNivel(0)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')" onclick="iniciarNivel(1)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')" onclick="iniciarNivel(2)"></button>
-</div>
+      <h3 class="subtitulo-dificultad">Fácil</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="iniciarNivel(0)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="iniciarNivel(1)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="iniciarNivel(2)"></button>
+      </div>
 
-<h3 class="subtitulo-dificultad">Medio</h3>
-<div class="niveles">
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')" onclick="iniciarNivel(3)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')" onclick="iniciarNivel(4)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')" onclick="iniciarNivel(5)"></button>
-</div>
+      <h3 class="subtitulo-dificultad">Medio</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="iniciarNivel(3)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="iniciarNivel(4)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="iniciarNivel(5)"></button>
+      </div>
 
-<h3 class="subtitulo-dificultad">Difícil</h3>
-<div class="niveles">
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')" onclick="iniciarNivel(6)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')" onclick="iniciarNivel(7)"></button>
-  <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')" onclick="iniciarNivel(8)"></button>
-</div>
+      <h3 class="subtitulo-dificultad">Difícil</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="iniciarNivel(6)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="iniciarNivel(7)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="iniciarNivel(8)"></button>
+      </div>
 
 
 
@@ -92,11 +120,33 @@
   <!-- Pantalla de juego -->
   <section id="pantalla-juego" class="oculto">
     <div class="contenedor">
-      <h2 id="contador-tiempo">Tiempo restante: 30s</h2>
-      <canvas id="canvas-juego"></canvas>
+      <div class="juego-flex">
+        <div class="contador-box">
+          <div id="contador-tiempo">
+            <span>Tiempo restante:</span>
+            <span id="contador-valor">30s</span>
+          </div>
+          <!-- Botones de acción para fin de juego -->
+          <div id="botones-fin-juego" class="oculto">
+            <div class="botones-fila-superior">
+              <img id="btn-niveles" src="Recursos/botonAtras.png" alt="Niveles" class="boton-img"
+                title="Regresar a niveles">
+              <img id="btn-reintentar" src="Recursos/botonRepetirNivel.png" alt="Reintentar" class="boton-img"
+                title="Reintentar nivel">
+              <img id="btn-siguiente" src="Recursos/botonSiguienteNivel.png" alt="Siguiente" class="boton-img oculto"
+                title="Siguiente nivel">
+            </div>
+            <img id="btn-menu" src="Recursos/botonVolverMenu.png" alt="Menú" class="boton-img" title="Salir al menú">
+          </div>
+        </div>
+        <div class="mapa-box">
+          <canvas id="canvas-juego"></canvas>
+        </div>
+      </div>
     </div>
   </section>
 
   <script src="script.js"></script>
 </body>
+
 </html>
