@@ -20,47 +20,47 @@ let distanciaDesdeInicio = 0;
 const imagenesCargadas = {};
 
 const texturasPorNivel = [
-  { // Nivel 1 - Bosque
+  { 
     bordes: "Recursos/bosque_arbol.png",
     camino: "Recursos/bosque_tierra.png",
     colision: "Recursos/bosque_arbusto.png"
   },
-  { // Nivel 2 -
-    bordes: "Recursos/bosque_arbol.png",
-    camino: "Recursos/bosque_tierra.png",
-    colision: "Recursos/bosque_arbusto.png"
-  },
-  { // Nivel 3 - Playa
-    bordes: "Recursos/playa_agua.png",
-    camino: "Recursos/playa_arena.png",
-    colision: "Recursos/playa_roca.png"
-  },
-  { // Nivel 1 -
-    bordes: "Recursos/bosque_arbol.png",
-    camino: "Recursos/bosque_tierra.png",
-    colision: "Recursos/bosque_arbusto.png"
-  },
-  { // Nivel 2 - Antartida
-    bordes: "Recursos/antartida_hielo.png",
-    camino: "Recursos/antartida_nieve.png",
-    colision: "Recursos/antartida_pico.png"
-  },
-  { // Nivel 3 -
-    bordes: "Recursos/bosque_arbol.png",
-    camino: "Recursos/bosque_tierra.png",
-    colision: "Recursos/bosque_arbusto.png"
-  },
-  { // Nivel 1 - cementerio
-    bordes: "Recursos/cementerio_calavera.png",
-    camino: "Recursos/cementerio_tierra.png",
-    colision: "Recursos/cementerio_lapida.png"
-  },
-  { // Nivel 2 - Dulce
+  { 
     bordes: "Recursos/dulce_arbol.png",
     camino: "Recursos/dulce_tierra.png",
     colision: "Recursos/dulce_baston.png"
   },
-  { // Nivel 3 - Nether
+  { 
+    bordes: "Recursos/playa_agua.png",
+    camino: "Recursos/playa_arena.png",
+    colision: "Recursos/playa_roca.png"
+  },
+  { 
+    bordes: "Recursos/bosque_arbol.png",
+    camino: "Recursos/bosque_tierra.png",
+    colision: "Recursos/bosque_arbusto.png"
+  },
+  { 
+    bordes: "Recursos/antartida_hielo.png",
+    camino: "Recursos/antartida_nieve.png",
+    colision: "Recursos/antartida_pico.png"
+  },
+  { 
+    bordes: "Recursos/cementerio_calavera.png",
+    camino: "Recursos/cementerio_tierra.png",
+    colision: "Recursos/cementerio_lapida.png"
+  },
+  { 
+    bordes: "Recursos/bosque_arbol.png",
+    camino: "Recursos/bosque_tierra.png",
+    colision: "Recursos/bosque_arbusto.png"
+  },
+  { 
+    bordes: "Recursos/dulce_arbol.png",
+    camino: "Recursos/dulce_tierra.png",
+    colision: "Recursos/dulce_baston.png"
+  },
+  { 
     bordes: "Recursos/nether_lava.png",
     camino: "Recursos/nether_camino.png",
     colision: "Recursos/nether_roca.png"
@@ -97,15 +97,15 @@ const preguntasPorNivel = [
 ];
 
 const palabrasPorNivel = [
-  ["Palabra", "Arena", "Mar", "Ola"],               // Nivel 0
-  ["Perro", "Gato", "Pez", "Loro"],             // Nivel 1
-  ["Rojo", "Verde", "Azul", "Amarillo"],        // Nivel 2
-  ["Manzana", "Pera", "Uva", "Sandía"],         // Nivel 3
-  ["Luna", "Sol", "Estrella", "Nube"],          // Nivel 4
-  ["Uno", "Dos", "Tres", "Cuatro"],             // Nivel 5
-  ["Fútbol", "Tenis", "Golf", "Natación"],      // Nivel 6
-  ["Carro", "Bici", "Avión", "Tren"],           // Nivel 7
-  ["Casa", "Escuela", "Parque", "Hospital"],    // Nivel 8
+  ["perro", "café", "lunes", "pluma"],
+  ["azul", "ratón", "sofá", "lápiz"],
+  ["camión", "pájaro", "pared", "sol"], 
+  ["mamá", "jamás", "compás", "carro"],
+  ["hotel", "viernes", "gallo", "vaso"],
+  ["papá", "gato", "sofá", "sábado"],
+  ["alma", "papel", "martes", "mesa"],
+  ["silla", "pared", "brújula", "mueble"], 
+  ["luz", "maratón", "último", "gallina"],
 ];
 
 let ultimoCambioSprite = Date.now();
@@ -115,6 +115,7 @@ let loopID = null;
 let tiempoRestante = 30;
 let intervaloTiempo = null;
 let teclasPresionadas = {};
+
 
 let krisList = [];
 
@@ -159,20 +160,22 @@ document.addEventListener("keyup", (e) => {
   }
 });
 
-document.addEventListener("keydown", (e) => {  // Tecla ESC para regresar al menú
+document.addEventListener("keydown", (e) => {
+  if (bloqueadoPorSonido) return;
   teclasPresionadas[e.key] = true;
   if (e.key === "Escape") {
     const juegoVisible = !document.getElementById("pantalla-juego").classList.contains("oculto");
     const nivelesVisible = !document.getElementById("pantalla-niveles").classList.contains("oculto");
-
+    if (!document.getElementById("pantalla-records").classList.contains("oculto")) {
+      document.getElementById("pantalla-records").classList.add("oculto");
+      document.getElementById("menu-principal").classList.remove("oculto");
+    }
     if (juegoVisible || nivelesVisible) {
+      detenerJuegoCompleto();
       volverAlMenu();
     }
   }
-
 });
-
-
 
 // Precarga inicial del personaje por defecto
 preCargarSprites(personajeSeleccionado);
@@ -203,29 +206,61 @@ function mostrarJuego() {
   document.getElementById("menu-principal").classList.add("oculto");
   document.getElementById("pantalla-niveles").classList.add("oculto");
   document.getElementById("pantalla-juego").classList.remove("oculto");
-  iniciarNivel(0); // Esta función debe cargar el mapa y dibujar el canvas
+  iniciarNivel(0);
+  pausarMusicaFondo();
+}
+
+function mostrarRegistro() {
+  detenerJuegoCompleto();
+  document.getElementById("login-form").classList.add("oculto");
+  document.getElementById("registro-form").classList.remove("oculto");
+  pausarMusicaFondo();
+}
+
+function mostrarLogin() {
+  detenerJuegoCompleto();
+  document.getElementById("registro-form").classList.add("oculto");
+  document.getElementById("login-form").classList.remove("oculto");
+  pausarMusicaFondo();
 }
 
 function volverAlMenu() {
+  detenerJuegoCompleto();
   document.getElementById("pantalla-juego").classList.add("oculto");
   document.getElementById("pantalla-niveles").classList.add("oculto");
   document.getElementById("menu-principal").classList.remove("oculto");
+  reproducirMusicaFondo();
 }
 
 function salir() {
-  alert("Gracias por jugar :)");
+  detenerJuegoCompleto();
+  document.getElementById("menu-principal").classList.add("oculto");
+  document.getElementById("pantalla-inicio").classList.remove("oculto");
+  pausarMusicaFondo();
 }
 
 function irAlMenu() {
   document.getElementById("pantalla-juego").classList.add("oculto");
   document.getElementById("pantalla-inicio").classList.add("oculto");
   document.getElementById("menu-principal").classList.remove("oculto");
+  reproducirMusicaFondo();
 }
 
 function mostrarNiveles() {
-  document.getElementById("pantalla-juego").classList.add("oculto"); // Oculta el juego
+  detenerJuegoCompleto();
+  document.getElementById("pantalla-juego").classList.add("oculto");
   document.getElementById("menu-principal").classList.add("oculto");
   document.getElementById("pantalla-niveles").classList.remove("oculto");
+  reproducirMusicaFondo();
+}
+
+function mostrarRecords() {
+  detenerJuegoCompleto();
+  document.getElementById("menu-principal").classList.add("oculto");
+  document.getElementById("pantalla-records").classList.remove("oculto");
+  document.getElementById("records-subtitulo").textContent = "Selecciona un nivel para ver los records.";
+  document.getElementById("tabla-records").innerHTML = "";
+  reproducirMusicaFondo();
 }
 
 function cargarTexturas(nivel) {
@@ -289,13 +324,13 @@ function iniciarNivel(nivel) {
   preguntaAnim.targetY = null;
 
   // Restaurar contador a su estado normal
-const valor = document.getElementById("contador-valor");
-if (valor) {
-  valor.textContent = "50s";
-  valor.classList.remove("mensaje-final");
-  valor.style.color = "#ffffff";
-  valor.style.fontSize = "1.3em";
-}
+  const valor = document.getElementById("contador-valor");
+  if (valor) {
+    valor.textContent = "50s";
+    valor.classList.remove("mensaje-final");
+    valor.style.color = "#ffffff";
+    valor.style.fontSize = "1.3em";
+  }
 
   if (intervaloTiempo) clearInterval(intervaloTiempo);
   tiempoRestante = 50;
@@ -653,6 +688,8 @@ function iniciarContador() {
 
   if (intervaloTiempo) clearInterval(intervaloTiempo);
 
+  reproducirMusicaJuego();
+
   intervaloTiempo = setInterval(() => {
     tiempoRestante--;
     actualizarContador();
@@ -685,18 +722,29 @@ function mostrarGameOver() {
 function terminarJuego(mensaje, color) {
   clearInterval(intervaloTiempo);
   clearInterval(loopID);
+  pausarMusicaJuego();
   const valor = document.getElementById("contador-valor");
   if (valor) {
     valor.textContent = mensaje;
     valor.style.color = color;
-    // Tamaño especial si es ganar
     if (mensaje.includes("Felicidades") || mensaje.includes("Has completado el nivel")) {
-      valor.style.fontSize = "1.5em"; // Cambia este valor según el tamaño que prefieras
+      valor.style.fontSize = "1.5em";
     } else {
       valor.style.fontSize = "1.8em";
     }
   }
-  // Mostrar botones según si ganas o pierdes
+
+  // Sonidos bloqueantes
+  if (mensaje.includes("Has completado el nivel")) {
+    if (nivelActual === mapasPorNivel.length - 1) {
+      reproducirSonidoBloqueante(sonidoJuego);
+    } else {
+      reproducirSonidoBloqueante(sonidoNivel);
+    }
+  } else {
+    reproducirSonidoBloqueante(sonidoMuerte);
+  }
+
   if (mensaje.includes("Felicidades") || mensaje.includes("Has completado el nivel")) {
     mostrarBotonesFinJuego("ganar");
   } else {
@@ -715,6 +763,7 @@ function inicializarBotonesNiveles() {
     btn.addEventListener('click', () => {
       const idx = parseInt(btn.getAttribute('data-nivel'), 10);
       if (!isNaN(idx)) {
+        pausarMusicaFondo(); // <-- Detiene la música al entrar a un nivel
         iniciarNivel(idx);
       }
     });
@@ -864,6 +913,7 @@ function ocultarBotonesFinJuego() {
 // Eventos para los botones
 document.getElementById("btn-niveles").onclick = function () {
   ocultarBotonesFinJuego();
+  pausarMusicaJuego(); // <-- Detén la música antes de volver a niveles
   mostrarNiveles();
 };
 document.getElementById("btn-menu").onclick = function () {
@@ -872,10 +922,140 @@ document.getElementById("btn-menu").onclick = function () {
 };
 document.getElementById("btn-reintentar").onclick = function () {
   ocultarBotonesFinJuego();
+  pausarMusicaJuego(); // <-- Detén la música antes de reiniciar
   iniciarNivel(nivelActual);
 };
 document.getElementById("btn-siguiente").onclick = function () {
   ocultarBotonesFinJuego();
+  pausarMusicaJuego(); // <-- Detén la música antes de iniciar el siguiente nivel
+  if (nivelActual < mapasPorNivel.length - 1) {
+    iniciarNivel(nivelActual + 1);
+  } else {
+    volverAlMenu();
+  }
+};
+
+function volverAlMenuDesdeRecords() {
+  document.getElementById("pantalla-records").classList.add("oculto");
+  document.getElementById("menu-principal").classList.remove("oculto");
+}
+
+function verRecordsNivel(nivel) {
+  document.getElementById("tabla-records").innerHTML =
+    `<p class="subtitulo-dificultad">Records del nivel ${nivel + 1}:</p>
+     <p>(Aquí se mostrarán los 5 mejores tiempos)</p>`;
+}
+
+function reproducirMusicaFondo() {
+  if (musicaFondo && musicaFondo.paused) {
+    musicaFondo.currentTime = 0;
+    musicaFondo.play();
+  }
+}
+
+function pausarMusicaFondo() {
+  if (!musicaFondo.paused) {
+    musicaFondo.pause();
+    musicaFondo.currentTime = 0;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  musicaFondo = document.getElementById("musica-fondo");
+});
+
+function entrarANivel(idx) {
+  pausarMusicaFondo();
+  iniciarNivel(idx);
+}
+
+let musicaJuego;
+
+document.addEventListener("DOMContentLoaded", function() {
+  musicaJuego = document.getElementById("musica-juego");
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  sonidoMuerte = document.getElementById("sonido-muerte");
+  sonidoNivel = document.getElementById("sonido-nivel");
+  sonidoJuego = document.getElementById("sonido-juego");
+});
+
+function reproducirMusicaJuego() {
+  if (musicaJuego && musicaJuego.paused) {
+    musicaJuego.currentTime = 0;
+    musicaJuego.play();
+  }
+}
+
+function pausarMusicaJuego() {
+  if (musicaJuego && !musicaJuego.paused) {
+    musicaJuego.pause();
+    musicaJuego.currentTime = 0;
+  }
+}
+
+function reproducirSonidoBloqueante(audio, callback) {
+  bloqueadoPorSonido = true;
+  audio.currentTime = 0;
+  audio.play();
+  audio.onended = function() {
+    bloqueadoPorSonido = false;
+    if (callback) callback();
+  };
+}
+
+
+// --- BLOQUEO EN TECLADO ---
+document.addEventListener("keydown", (e) => {
+  if (bloqueadoPorSonido) return;
+  // ...tu código de teclado aquí...
+  teclasPresionadas[e.key] = true;
+  if (e.key === "Escape") {
+    const juegoVisible = !document.getElementById("pantalla-juego").classList.contains("oculto");
+    const nivelesVisible = !document.getElementById("pantalla-niveles").classList.contains("oculto");
+    if (!document.getElementById("pantalla-records").classList.contains("oculto")) {
+      document.getElementById("pantalla-records").classList.add("oculto");
+      document.getElementById("menu-principal").classList.remove("oculto");
+    }
+    if (juegoVisible || nivelesVisible) {
+      pausarMusicaJuego();
+      volverAlMenu();
+    }
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (bloqueadoPorSonido) return;
+  // ...tu código de teclado aquí...
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+    teclasPresionadas[e.key] = false;
+  }
+});
+
+// --- BLOQUEO EN BOTONES DE FIN DE JUEGO ---
+document.getElementById("btn-niveles").onclick = function () {
+  if (bloqueadoPorSonido) return;
+  ocultarBotonesFinJuego();
+  pausarMusicaJuego();
+  mostrarNiveles();
+};
+document.getElementById("btn-menu").onclick = function () {
+  if (bloqueadoPorSonido) return;
+  ocultarBotonesFinJuego();
+  volverAlMenu();
+};
+document.getElementById("btn-reintentar").onclick = function () {
+  if (bloqueadoPorSonido) return;
+  ocultarBotonesFinJuego();
+  pausarMusicaJuego();
+  iniciarNivel(nivelActual);
+};
+document.getElementById("btn-siguiente").onclick = function () {
+  if (bloqueadoPorSonido) return;
+  ocultarBotonesFinJuego();
+  pausarMusicaJuego();
   if (nivelActual < mapasPorNivel.length - 1) {
     iniciarNivel(nivelActual + 1);
   } else {
@@ -884,6 +1064,19 @@ document.getElementById("btn-siguiente").onclick = function () {
 };
 
 inicializarBotonesNiveles();
+
+function detenerJuegoCompleto() {
+  // Detén el loop y el contador
+  if (intervaloTiempo) clearInterval(intervaloTiempo);
+  if (loopID) clearInterval(loopID);
+
+  // Pausa todos los sonidos del juego
+  pausarMusicaJuego();
+  if (sonidoMuerte) { sonidoMuerte.pause(); sonidoMuerte.currentTime = 0; }
+  if (sonidoNivel) { sonidoNivel.pause(); sonidoNivel.currentTime = 0; }
+  if (sonidoJuego) { sonidoJuego.pause(); sonidoJuego.currentTime = 0; }
+  bloqueadoPorSonido = false;
+}
 
 // MATRICES DE LOS NIVELES (vacías para que las rellenes tú)
 const mapasPorNivel = [

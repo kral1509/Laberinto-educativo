@@ -49,6 +49,12 @@
   <section id="menu-principal" class="oculto">
     <div class="contenedor">
       <h1 class="titulo">La Ruta del Acento</h1>
+      <!-- Botón de Records arriba a la derecha -->
+      <div id="btn-ver-records" class="btn-records-menu">
+        <button class="btn-imagen btn-records" onclick="mostrarRecords()">
+          <img src="Recursos/botonRecords.png" alt="Records" />
+        </button>
+      </div>
       <div class="contenedor-flex">
         <div class="menu-izquierda">
           <!-- Botones aquí -->
@@ -77,6 +83,45 @@
     </div>
   </section>
 
+  <section id="pantalla-records" class="oculto">
+    <div class="contenedor">
+      <h2 class="titulo-dificultad">Records por Nivel</h2>
+      <div id="records-subtitulo" class="subtitulo-dificultad">Selecciona un nivel para ver los records.</div>
+
+      <h3 class="subtitulo-dificultad">Fácil</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="verRecordsNivel(0)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="verRecordsNivel(1)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="verRecordsNivel(2)"></button>
+      </div>
+
+      <h3 class="subtitulo-dificultad">Medio</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="verRecordsNivel(3)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="verRecordsNivel(4)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="verRecordsNivel(5)"></button>
+      </div>
+
+      <h3 class="subtitulo-dificultad">Difícil</h3>
+      <div class="niveles">
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
+          onclick="verRecordsNivel(6)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
+          onclick="verRecordsNivel(7)"></button>
+        <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
+          onclick="verRecordsNivel(8)"></button>
+      </div>
+
+      <div id="tabla-records"></div>
+    </div>
+  </section>
+
   <!-- Pantalla de niveles -->
   <section id="pantalla-niveles" class="oculto">
     <div class="contenedor">
@@ -85,35 +130,32 @@
       <h3 class="subtitulo-dificultad">Fácil</h3>
       <div class="niveles">
         <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
-          onclick="iniciarNivel(0)"></button>
+          onclick="entrarANivel(0)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
-          onclick="iniciarNivel(1)"></button>
+          onclick="entrarANivel(1)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
-          onclick="iniciarNivel(2)"></button>
+          onclick="entrarANivel(2)"></button>
       </div>
 
       <h3 class="subtitulo-dificultad">Medio</h3>
       <div class="niveles">
         <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
-          onclick="iniciarNivel(3)"></button>
+          onclick="entrarANivel(3)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
-          onclick="iniciarNivel(4)"></button>
+          onclick="entrarANivel(4)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
-          onclick="iniciarNivel(5)"></button>
+          onclick="entrarANivel(5)"></button>
       </div>
 
       <h3 class="subtitulo-dificultad">Difícil</h3>
       <div class="niveles">
         <button class="nivel-btn" style="background-image:url('Recursos/nivel1.png')"
-          onclick="iniciarNivel(6)"></button>
+          onclick="entrarANivel(6)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel2.png')"
-          onclick="iniciarNivel(7)"></button>
+          onclick="entrarANivel(7)"></button>
         <button class="nivel-btn" style="background-image:url('Recursos/nivel3.png')"
-          onclick="iniciarNivel(8)"></button>
+          onclick="entrarANivel(8)"></button>
       </div>
-
-
-
     </div>
   </section>
 
@@ -136,7 +178,9 @@
               <img id="btn-siguiente" src="Recursos/botonSiguienteNivel.png" alt="Siguiente" class="boton-img oculto"
                 title="Siguiente nivel">
             </div>
-            <img id="btn-menu" src="Recursos/botonVolverMenu.png" alt="Menú" class="boton-img" title="Salir al menú">
+            <div class="boton-fila-inferior">
+              <img id="btn-menu" src="Recursos/botonVolverMenu.png" alt="Menú" class="boton-img" title="Salir al menú">
+            </div>
           </div>
         </div>
         <div class="mapa-box">
@@ -146,6 +190,11 @@
     </div>
   </section>
 
+  <audio id="musica-fondo" src="Recursos/FondoMenu.wav" loop></audio>
+  <audio id="musica-juego" src="Recursos/Fondojuego.wav" loop></audio>
+  <audio id="sonido-muerte" src="Recursos/Muerte.wav"></audio>
+  <audio id="sonido-nivel" src="Recursos/NivelCompletado.wav"></audio>
+  <audio id="sonido-juego" src="Recursos/JuegoCompletado.wav"></audio>
   <script src="script.js"></script>
 </body>
 

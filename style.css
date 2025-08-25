@@ -22,6 +22,7 @@ body {
   box-sizing: border-box;
   background: rgba(42, 0, 58, 0.7);
   border-radius: 18px;
+  position: relative;
 }
 
 .contenedor-flex {
@@ -406,9 +407,15 @@ body {
 
 .subtitulo-dificultad {
   font-size: 1.6em;
-  margin: 18px 0 22px 0; /* Arriba, derecha, abajo, izquierda */
+  margin: 18px 0 22px 0;
   color: #fff;
   text-shadow: 0 0 6px #00aaff;
+  text-align: center;           /* <-- Centra el texto */
+  font-family: 'Orbitron', 'Audiowide', Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  width: 100%;                  /* <-- Ocupa todo el ancho */
+  display: block;               /* <-- Asegura que sea bloque */
 }
 
 .juego-flex {
@@ -470,26 +477,37 @@ body {
 
 #botones-fin-juego {
   position: absolute;
-  left: 80px;
-  bottom: 10px;
+  top: 400px;      /* Ajusta este valor para que queden justo debajo del contador */
+  left: 4%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  align-items: flex-start;
+  gap: 50%;
   z-index: 10;
+  width: auto;
 }
 
 .botones-fila-superior {
   display: flex;
   flex-direction: row;
-  gap: 60px;
-  justify-content: center;
-  margin-bottom: 0px;
+  gap: 32px; /* px para separación horizontal */
+  justify-content: flex-start;
+  margin-bottom: 32px; /* Separación vertical con el botón de abajo */
+  width: 100%;
+}
+
+.boton-fila-inferior {
+  display: flex;
+  justify-content: center; /* Centra el botón horizontalmente */
+  width: 100%;
 }
 
 .boton-img {
   width: 110px;
   height: 110px;
+  min-width: 60px;
+  max-width: 120px;
+  aspect-ratio: 1/1;
   cursor: pointer;
   border-radius: 22px;
   background: none;
@@ -503,4 +521,59 @@ body {
 
 .oculto {
   display: none !important;
+}
+
+.btn-records-menu {
+  position: absolute;
+  top: 2%;
+  right: 3%;
+  z-index: 20;
+}
+
+.btn-imagen.btn-records {
+  width: 7vw;
+  min-width: 60px;
+  max-width: 120px;
+  height: 7vw;
+  min-height: 60px;
+  max-height: 120px;
+  border-radius: 22px;
+  background: none;
+  cursor: pointer;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  display: block;
+  position: relative;
+  overflow: visible;
+}
+
+.btn-imagen.btn-records img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 22px;
+  background: none;
+  display: block;
+  box-shadow: none;
+}
+
+.btn-imagen.btn-records::after {
+  display: none !important; /* Quita el brillo animado */
+  content: none !important;
+}
+
+.btn-imagen.btn-records:hover {
+  transform: scale(1.08);
+}
+
+#records-subtitulo {
+  font-size: 1.6em;
+  margin: 18px 0 22px 0;
+  color: #fff;
+  text-shadow: 0 0 6px #00aaff;
+  text-align: center;
+  font-family: 'Orbitron', 'Audiowide', Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
